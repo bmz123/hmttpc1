@@ -1,12 +1,11 @@
 <template>
   <div class="container">
-主页
+      <van-nav-bar title="编辑资料" left-arrow right-text="保存" @click-left="$router.back()" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home'// devtool
 }
 </script>
 

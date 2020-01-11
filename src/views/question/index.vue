@@ -1,5 +1,5 @@
 <template>
-   <div class="container">
+  <div class="container">
     <div class="split"></div>
     <van-skeleton avatar title :row="4" />
     <div class="split"></div>
@@ -11,8 +11,9 @@
 
 <script>
 export default {
+  name: 'question'
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 </style>
