@@ -69,6 +69,7 @@ export default {
       //   }
       // }, 1000)
       // 请求数据。如果时间戳为空就传当前时间
+      await this.$sleep()// 等待sleep.resolve
       const data = await getArticles({ channel_id: this.channel_id,
         timestamp: this.timestamp || Date.now() })
       this.articles.push(...data.results)
@@ -93,6 +94,7 @@ export default {
       //   this.refreshSuccessText = `更新了${arr.length}条数据`
       // }, 1000)
       // 下拉刷新永远获取新数据
+      await this.$sleep()// 等待sleep.resolve
       const data = await getArticles({ channel_id: this.channel_id,
         timestamp: Date.now() })
       this.downLoading = false// 关掉下拉状态
