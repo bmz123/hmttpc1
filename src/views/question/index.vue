@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <div class="split"></div>
-    <van-skeleton avatar title :row="4" />
-    <div class="split"></div>
-    <van-skeleton avatar title :row="3" />
-    <div class="split"></div>
-    <van-skeleton avatar title :row="3" />
+  <div>
+    <div class='split' ></div>
+     <van-skeleton title :row="3" />
+     <div  class='split' ></div>
+     <van-skeleton title :row="3" />
+     <div  class='split' ></div>
+     <van-skeleton title :row="3" />
   </div>
 </template>
 
@@ -15,5 +15,6 @@ export default {
 }
 </script>
 
-<style>
+<style >
+
 </style>
