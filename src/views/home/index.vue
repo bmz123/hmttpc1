@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <van-tabs v-model="activeIndex" swipeable>
-      <van-tab :title="'标签' +  item" v-for="item in 10" :key="item">
+      <van-tab :title="channel.name" v-for="channel in channels" :key="channel.id">
         <!-- 这里注意 这个div设置了滚动条 目的是 给后面做 阅读记忆 留下伏笔 -->
         <!-- 阅读记忆 => 看文章看到一半 滑到中部 去了别的页面 当你回来时 文章还在你看的位置 -->
         <!-- 一个tab标签对于一个article-list组件 -->
         <article-list></article-list>
         <div class='scroll-wrapper'>
           <van-cell-group>
-            <van-cell v-for="obj in 20" :key="obj" :title="item"></van-cell>
+            <van-cell v-for="obj in 20" :key="obj" :title="obj"></van-cell>
           </van-cell-group>
         </div>
       </van-tab>
@@ -20,16 +20,28 @@
 </template>
 
 <script>
+import { getMyChannels } from '@/api/channels'
 import ArticleList from './commpents/article-list'
 export default {
   name: 'home', // devtools查看组件时  可以看到 对应的name名称
   data () {
     return {
-      activeIndex: 0 // 默认启动第0 个标签
+      activeIndex: 0, // 默认启动第0 个标签
+      channels: []// 声明接收频道的数据
     }
   },
   components: {
     ArticleList
+  },
+  methods: {
+    async getMyChannels () {
+      // 获取频道列表数据
+      let data = await getMyChannels()
+      this.channels = data.channels // 将频赋值给声明的变量
+    }
+  },
+  created () {
+    this.getMyChannels()
   }
 }
 </script>
