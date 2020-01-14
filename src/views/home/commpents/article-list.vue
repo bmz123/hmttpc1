@@ -83,15 +83,33 @@ export default {
       }
     },
     // 下拉刷新的方法
-    onRefresh () {
+    async onRefresh () {
       // 触发下拉刷新
-      setTimeout(() => {
-        console.log('下拉刷新')
-        let arr = Array.from(Array(10), (value, index) => '追加' + (index + 1))
-        this.articles.unshift(...arr) // 数据添加到队首
-        this.downLoading = false // 关掉下拉数据
-        this.refreshSuccessText = `更新了${arr.length}条数据`
-      }, 1000)
+      // setTimeout(() => {
+      //   console.log('下拉刷新')
+      //   let arr = Array.from(Array(10), (value, index) => '追加' + (index + 1))
+      //   this.articles.unshift(...arr) // 数据添加到队首
+      //   this.downLoading = false // 关掉下拉数据
+      //   this.refreshSuccessText = `更新了${arr.length}条数据`
+      // }, 1000)
+      // 下拉刷新永远获取新数据
+      const data = await getArticles({ channel_id: this.channel_id,
+        timestamp: Date.now() })
+      this.downLoading = false// 关掉下拉状态
+      // 有可能最新 的没有推荐数据
+      if (data.results.length) {
+        // 长度大于0表示有数据
+        this.articles = data.results// 将历史数据全都覆盖了
+        // 假如之前已经将上拉加载的finished设置成true了
+        // 表示还要继续往下拉，就需要把原来的状态再次打开
+        this.finished = false
+        // 注意我们依然需要获取此次的历史时间戳
+        this.timestamp = data.pre_timestamp// 赋值历史时间戳，因为当你下拉刷新之后再上拉加载以后还要用到这个历史时间戳
+        this.refreshSuccessText = `更新了${data.results.length}条数据`
+      } else {
+        // 数据不更新，什么都不用做
+        this.refreshSuccessText = '已经是最新数据'
+      }
     }
   }
 }
